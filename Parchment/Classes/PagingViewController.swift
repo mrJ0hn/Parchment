@@ -301,6 +301,19 @@ open class PagingViewController<T: PagingItem>:
     configureStateMachine()
   }
 
+  public init(navigationOrientation: EMPageViewControllerNavigationOrientation) {
+    self.options = PagingOptions()
+    self.visibleItems = PagingItems(items: [])
+    self.sizeCache = PagingSizeCache(options: options)
+    self.stateMachine = PagingStateMachine(initialState: .empty)
+    self.pageViewController = EMPageViewController(navigationOrientation: navigationOrientation)
+    self.collectionViewLayout = createLayout(layout: menuLayoutClass.self, options: options)
+    self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+    super.init(nibName: nil, bundle: nil)
+    configureCollectionViewLayout()
+    configureStateMachine()
+  }
+
   /// Creates an instance of `PagingViewController`.
   ///
   /// - Parameter coder: An unarchiver object.
